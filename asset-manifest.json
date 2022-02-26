@@ -1,0 +1,15 @@
+{
+  "main.css": "/chess_app/static/css/main.13c04b4c.chunk.css",
+  "main.js": "/chess_app/static/js/main.14850a1f.chunk.js",
+  "main.js.map": "/chess_app/static/js/main.14850a1f.chunk.js.map",
+  "static/js/1.0d630a3e.chunk.js": "/chess_app/static/js/1.0d630a3e.chunk.js",
+  "static/js/1.0d630a3e.chunk.js.map": "/chess_app/static/js/1.0d630a3e.chunk.js.map",
+  "static/js/2.45de306f.chunk.js": "/chess_app/static/js/2.45de306f.chunk.js",
+  "static/js/2.45de306f.chunk.js.map": "/chess_app/static/js/2.45de306f.chunk.js.map",
+  "runtime~main.js": "/chess_app/static/js/runtime~main.6c7e0404.js",
+  "runtime~main.js.map": "/chess_app/static/js/runtime~main.6c7e0404.js.map",
+  "static/css/main.13c04b4c.chunk.css.map": "/chess_app/static/css/main.13c04b4c.chunk.css.map",
+  "index.html": "/chess_app/index.html",
+  "precache-manifest.3516af903255d3b792e47a80c5d08a47.js": "/chess_app/precache-manifest.3516af903255d3b792e47a80c5d08a47.js",
+  "service-worker.js": "/chess_app/service-worker.js"
+}
