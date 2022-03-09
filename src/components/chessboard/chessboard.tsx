@@ -9,7 +9,7 @@ import { relative } from "node:path/win32";
 const horizontalAxis = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 const verticalAxis = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
-interface Piece {
+export interface Piece {
     image: string
     x: number
     y: number
@@ -126,7 +126,7 @@ function dropPiece(e : React.MouseEvent){
          setPieces((value) => {
              const pieces = value.map(p => {
                  if(p.x == gridX && p.y == gridY){
-                 const validMove = referee.isValidMove(gridX,gridY,x,y,p.type,p.team);
+                 const validMove = referee.isValidMove(gridX,gridY,x,y,p.type,p.team,value);
 
                  if(validMove){
                      p.x = x;
