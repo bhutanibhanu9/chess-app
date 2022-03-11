@@ -15,6 +15,7 @@ export interface Piece {
     y: number
     type : PieceType
     team : Teamtype
+    enPassant ?: boolean
 }
 
 export enum Teamtype{
@@ -121,26 +122,61 @@ function dropPiece(e : React.MouseEvent){
     const chessboard = chessboardRef.current;
     if(activePiece && chessboard){
         const x = Math.floor((e.clientX - chessboard.offsetLeft)/80);
-        const y = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop -640)/80));        
+        const y = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop -640)/80));   
+        
+        const currentPiece = pieces.find(p => p.x === gridX && p.y === gridY);
 
-         setPieces((value) => {
-             const pieces = value.map(p => {
-                 if(p.x == gridX && p.y == gridY){
-                 const validMove = referee.isValidMove(gridX,gridY,x,y,p.type,p.team,value);
+        if(currentPiece){
+            const validMove = referee.isValidMove(gridX,gridY,x,y,currentPiece.type,currentPiece.team,pieces);
 
-                 if(validMove){
-                     p.x = x;
-                     p.y = y;
-                 }else{
-                     activePiece.style.position = 'relative';
-                     activePiece.style.removeProperty('top');
-                     activePiece.style.removeProperty('left');
-                 }
-                 }
-                 return p;
-             });
-             return pieces;
-         });
+            const enPassant = referee.isEnPassantMove(gridX,gridY,x,y,currentPiece.type,currentPiece.team,pieces);
+
+            const pawnDirection = currentPiece.team === Teamtype.OUR ? 1 : -1;
+
+            if(enPassant){
+                const updatedPieces = pieces.reduce((results,piece) => {
+                    if(piece.x === gridX && piece.y === gridY ){
+                    piece.enPassant = false;
+                    piece.x = x;
+                    piece.y = y;
+                    results.push(piece);
+                    }else if(!(piece.x === x && piece.y === y-pawnDirection)){ 
+                        if(piece.type===PieceType.PAWN){
+                            piece.enPassant = false;
+                        }
+                        results.push(piece);
+                    }
+
+                    return results;
+                },[] as Piece[])
+                setPieces(updatedPieces);
+            }else if(validMove){
+            const updatedPieces = pieces.reduce((results,piece) => {
+                if(piece.x === gridX && piece.y === gridY ){
+                    if(Math.abs((gridY - y)) === 2 && piece.type === PieceType.PAWN){
+                    piece.enPassant= true;
+                    }else{
+                        piece.enPassant = false;
+                    }
+                    piece.x = x;
+                    piece.y = y;
+                    results.push(piece);
+                }else if(!(piece.x === x && piece.y === y)){ 
+                    if(piece.type===PieceType.PAWN){
+                        piece.enPassant = false;
+                    }
+                    results.push(piece);
+                }
+
+                return results;
+            },[] as Piece[]);
+            setPieces(updatedPieces);
+        }else{
+            activePiece.style.position = 'relative';
+            activePiece.style.removeProperty('top');
+            activePiece.style.removeProperty('left');
+        }
+    }
          setactivePiece(null);
     }
 }
