@@ -130,10 +130,10 @@ export default class Referee {
                     return true;
                 }
             }
-        } 
+        }
         // MOVEMENT FOR KNIGHT
 
-        else if (type = PieceType.KNIGHT) {
+        else if (type === PieceType.KNIGHT) {
             // MOVING LOGIC FOR KNIGHT
             // 8 DIFFRENT MOVING PATTERNS 
             // VERICAL/HORIZONTAL + DIAGONAL
@@ -158,7 +158,74 @@ export default class Referee {
                     }
                 }
             }
-        } return false;
+        } 
+
+        // MOVEMENT AND ATTACK LOGIC FOR BISHOP
+
+        else if (type === PieceType.BISHOP) {
+            for (let i = 1; i < 8; i++) 
+            {
+                // TOP RIGHT MOVEMENT
+                if(desiredPosition.x > initialPosition.x && desiredPosition.y > initialPosition.y){
+                    let passedPosition : Position = {x :initialPosition.x + i , y: initialPosition.y + i};
+                    if(samePosition(passedPosition, desiredPosition)){
+                        if(this.tileIsEmptyOrOccupiedByEnemy(passedPosition , boardState , team)){
+                            return true;
+                        }
+                    }
+                        else{
+                            if(this.tileIsOccupied(passedPosition ,boardState)){
+                                break;
+                            }
+                        }
+                    }
+                    
+            
+                // BOTTOM RIGHT MOVEMENT
+                if(desiredPosition.x > initialPosition.x && desiredPosition.y < initialPosition.y){
+                    let passedPosition : Position = {x :initialPosition.x + i , y: initialPosition.y - i};
+                    if(samePosition(passedPosition, desiredPosition)){
+                        if(this.tileIsEmptyOrOccupiedByEnemy(passedPosition , boardState , team)){
+                            return true;
+                        }
+                    }
+                        else{
+                            if(this.tileIsOccupied(passedPosition ,boardState)){
+                                break;
+                            }
+                        }
+                    }
+                // BOTTOM LEFT MOVEMENT
+                if(desiredPosition.x < initialPosition.x && desiredPosition.y < initialPosition.y){
+                    let passedPosition : Position = {x :initialPosition.x - i , y: initialPosition.y - i};
+                    if(samePosition(passedPosition, desiredPosition)){
+                        if(this.tileIsEmptyOrOccupiedByEnemy(passedPosition , boardState , team)){
+                            return true;
+                        }
+                    }
+                        else{
+                            if(this.tileIsOccupied(passedPosition ,boardState)){
+                                break;
+                            }
+                        }
+                    }
+                // TOP LEFT
+                if(desiredPosition.x < initialPosition.x && desiredPosition.y > initialPosition.y){
+                    let passedPosition : Position = {x :initialPosition.x - i , y: initialPosition.y + i};
+                    if(samePosition(passedPosition, desiredPosition)){
+                        if(this.tileIsEmptyOrOccupiedByEnemy(passedPosition , boardState , team)){
+                            return true;
+                        }
+                    }
+                        else{
+                            if(this.tileIsOccupied(passedPosition ,boardState)){
+                                break;
+                            }
+                        }
+                    }
+            }
+        }
+        return false;
     }
 }
 
